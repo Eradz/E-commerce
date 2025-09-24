@@ -2,10 +2,10 @@
   "name": "medaussie-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "netlify/functions/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/index.ts",
+    "start": "ts-node netlify/functions/index.ts",
     "build": "npm install && tsc",
     "serve": "node dist/index.js",
     "server": "nodemon"
@@ -30,6 +30,7 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
+    "@netlify/functions": "^4.2.6",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
