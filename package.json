@@ -2,12 +2,12 @@
   "name": "medaussie-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "netlify/functions/index.ts",
+  "main": "netlify/functions/api.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node netlify/functions/index.ts",
+    "start": "ts-node netlify/functions/api.ts",
     "build": "npm install && tsc",
-    "serve": "node dist/index.js",
+    "serve": "node dist/api.js",
     "server": "nodemon"
   },
   "author": "",
@@ -24,7 +24,7 @@
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth2": "^0.1.10",
     "dotenv": "^16.4.5",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
@@ -45,6 +45,7 @@
     "passport-google-oauth2": "^0.2.0",
     "pg-hstore": "^2.3.4",
     "pg-promise": "^12.1.3",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "serverless-http": "^4.0.0"
   }
 }
