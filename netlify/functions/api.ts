@@ -8,6 +8,9 @@ import cors from "cors"
 import http from "http"
 import { CategoryRouter } from "./routes"
 import { errorHandler } from "./middlewares"
+import ServerlessHttp from "serverless-http"
+
+
 dotenv.config()
 const app = express()
 const port = 5000
@@ -36,9 +39,8 @@ app.get('/logout', (req, res) => {
 // app.use("/api/v1/auth", authRouter)
 // app.use("/api/v1/user", userRouter)
 app.use("/api/category", CategoryRouter)
-
 const server = http.createServer({}, app)
-
+export const handler = ServerlessHttp(app)
 
 app.use(errorHandler)
 server.listen(port, ()=>{
