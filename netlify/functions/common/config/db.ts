@@ -1,6 +1,8 @@
 import { Sequelize, DataType } from "sequelize";
 import { readFileSync } from 'node:fs'
+import dotenv from "dotenv"
 import { join } from "node:path";
+dotenv.config()
 // export const sequelize = new Sequelize( process.env.NODE_ENV === "development" ? "postgresql://postgres:351885@localhost:5432/E-commerce" : "postgres://avnadmin:AVNS_KEwRFRgALaIONmh4qzl@tech-commerce-anaguchidiebere-ebf9.j.aivencloud.com:19629/defaultdb?sslmode=require",
 //     {
 //         define: {
@@ -14,15 +16,23 @@ export const sequelize = new Sequelize({
       require:true
     },
   },
-  host: "tech-commerce-anaguchidiebere-ebf9.j.aivencloud.com",
-  username: "avnadmin",
-  password: "AVNS_KEwRFRgALaIONmh4qzl",
+  host: process.env.POSTGRES_HOST,
+  username: process.env.POSTGRES_USERNAME,
+  password: process.env.POSTGRES_PASSWORD,
   port: 19629,
   dialect: "postgres",
-  database:"defaultdb", 
+  database: process.env.POSTGRES_DATABASE, 
   define:{
     freezeTableName:true
   }
+  /**
+   * host: process.env.POSTGRES_HOST,
+  username: process.env.POSTGRES_USERNAME,
+  password: process.env.POSTGRES_PASSWORD,
+  port: process.env.POSTGRES_PORT,
+  dialect: process.env.POSTGRES_DIALECT,
+  database:process.env.POSTGRES_DATABASE, 
+   */
 })
 export const db = async(): Promise<void> =>{
     try {
