@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 import dotenv from "dotenv"
 dotenv.config()
 export const sequelize = new Sequelize({
+  dialect:"postgres",
   dialectOptions:{
     ssl:{
       ca:  process.env.POSTGRES_CA,
@@ -13,7 +14,6 @@ export const sequelize = new Sequelize({
   username: process.env.POSTGRES_USERNAME,
   password: process.env.POSTGRES_PASSWORD,
   port: Number(process.env.POSTGRES_PORT),
-  dialect: "postgres",
   database: process.env.POSTGRES_DATABASE, 
   define:{
     freezeTableName:true
