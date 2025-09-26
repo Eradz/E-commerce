@@ -5,6 +5,7 @@ import pg from "pg"
 dotenv.config()
 export const sequelize = new Sequelize({
   dialect:"postgres",
+  dialectModule: pg,
   dialectOptions:{
     ssl:{
       ca:  process.env.POSTGRES_CA,
