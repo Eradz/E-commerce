@@ -26,8 +26,8 @@ app.use(passport.authenticate('session'))
 app.use(passport.initialize())
 passport.serializeUser(function(user, done) {done(null, user);});
 passport.deserializeUser(function(user: any, done) {done(null, user);});
-app.get("/", (req, res)=>{
-    res.status(200).json({message: "Medaussie"})
+app.get("/api", (req, res)=>{
+    res.status(200).json({message: "Laptop E-commerce"})
 })
 app.get("/login", (req, res)=>{
     res.redirect(`${process.env.FRONTEND_URL}/login`)
