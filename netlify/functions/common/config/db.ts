@@ -1,11 +1,11 @@
-import { Sequelize, DataType } from "sequelize";
+import { Sequelize } from "sequelize";
 import { readFileSync } from 'node:fs'
 import dotenv from "dotenv"
 dotenv.config()
 export const sequelize = new Sequelize({
   dialectOptions:{
     ssl:{
-      ca: readFileSync('./ca.pem').toString(),
+      ca:  process.env.POSTGRES_CA,
       require:true
     },
   },
