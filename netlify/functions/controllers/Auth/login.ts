@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken"
 export const loginController = AsyncHandler(async(req: Request, res: Response) =>{
    const { password, email} = req.body
    if(!password || !email){
-      AppResponse.error(res, "Please fill all required fields")
+      return AppResponse.error(res, "Please fill all required fields")
    }
    // Perform login logic here 
    const user = await User.findOne({where:{email}})
@@ -17,14 +17,14 @@ export const loginController = AsyncHandler(async(req: Request, res: Response) =
       return
    }
    if(user?.googleId){
-      AppResponse.error(res, "User can only Sign in with Google")
+      return AppResponse.error(res, "User can only Sign in with Google")
 
    }
-   if(user !== null && await bcrypt.compare(password, user.password)){
+   if(user !== null && user.password && await bcrypt.compare(password, user.password)){
         const accessToken = await jwt.sign({userId: user.id, date: Date.now()}, process.env.JWT_SECRET || "", {expiresIn: "7d"})
         setCookies(res, "access_token", accessToken)
-      AppResponse.success(res, `Login successful, Welcome ${user.firstname}`, null)
+      return AppResponse.success(res, `Login successful, Welcome ${user.firstname}`, null)
    }else{
-       AppResponse.error(res, "Invalid Email or Password")
+       return AppResponse.error(res, "Invalid Email or Password")
    }
 })
