@@ -1,5 +1,5 @@
 {
-  "name": "medaussie-backend",
+  "name": "techecommerce-backend",
   "version": "1.0.0",
   "description": "",
   "main": "netlify/functions/api.ts",

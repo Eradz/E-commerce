@@ -1,0 +1,5 @@
+import path from "path"
+
+module.exports = {
+    "seeders-path": path.resolve('./yourdirectory/seeders'),
+};
