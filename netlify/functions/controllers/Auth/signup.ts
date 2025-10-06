@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs"
 import { UserType } from "../../common/types"
 
 export const signupController = AsyncHandler(async(req: Request, res: Response) =>{
+   // AppResponse.success(res, "Signup", null)
    const {firstname, lastname, password, email, role, address, phone_number} : UserType = req.body
    if(!firstname || !lastname || !password || !email ){
       return AppResponse.error(res, "Please fill all required fields")

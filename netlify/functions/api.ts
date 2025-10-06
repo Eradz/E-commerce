@@ -6,13 +6,13 @@ import passport from "passport"
 import Session from "express-session";
 import cors from "cors"
 import http from "http"
-import { CategoryRouter } from "./routes"
+import { authRouter, CategoryRouter, userRouter } from "./routes"
 import { errorHandler } from "./middlewares"
 import ServerlessHttp from "serverless-http"
 
 
 dotenv.config()
-const app = express()
+export const app = express()
 const port = 5000
 db()
 app.use(express.json())
@@ -36,8 +36,8 @@ app.get('/logout', (req, res) => {
     res.cookie('access_token', '', { maxAge: 0 });
     res.redirect("/login")
   });
-// app.use("/api/v1/auth", authRouter)
-// app.use("/api/v1/user", userRouter)
+app.use("/api/v1/auth", authRouter)
+app.use("/api/v1/user", userRouter)
 app.use("/api/category", CategoryRouter)
 const server = http.createServer({}, app)
 export const handler = ServerlessHttp(app)

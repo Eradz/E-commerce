@@ -37,9 +37,6 @@ export const User = sequelize.define<UserType>("User",{
     password: {
         type: DataTypes.STRING,
         allowNull: true,
-        validate:{
-            isAlpha: true
-        }
     },
     role: {
         type: DataTypes.STRING,
@@ -51,15 +48,12 @@ export const User = sequelize.define<UserType>("User",{
     address: {
         type: DataTypes.STRING,
         allowNull: true,
-        validate:{
-            isAlpha: true
-        }
     },
     phone_number: {
         type: DataTypes.STRING,
         allowNull: true,
         validate:{
-            isAlpha: true
+            isNumeric: true
         }
     }   
 }, {timestamps: true})
