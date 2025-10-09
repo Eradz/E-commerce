@@ -1,30 +1,45 @@
-import {Response, Request} from "express"
-import { AppResponse, setCookies } from "../../common/utils"
-import AsyncHandler from "express-async-handler"
-import { User } from "../../models"
-import bcrypt from "bcryptjs"
-import jwt from "jsonwebtoken"
+import { Response, Request } from "express";
+import AsyncHandler from "express-async-handler";
+import { User } from "../../models";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { AppResponse, setCookies } from "../../common/utils";
 
-export const loginController = AsyncHandler(async(req: Request, res: Response) =>{
-   const { password, email} = req.body
-   if(!password || !email){
-      return AppResponse.error(res, "Please fill all required fields")
-   }
-   // Perform login logic here 
-   const user = await User.findOne({where:{email}})
-   if(!user){
-      AppResponse.error(res, "Invalid Email or Password")
-      return
-   }
-   if(user?.googleId){
-      return AppResponse.error(res, "User can only Sign in with Google")
+export const loginController = AsyncHandler(async (req: Request, res: Response) => {
+  const { password, email } = req.body;
 
-   }
-   if(user !== null && user.password && await bcrypt.compare(password, user.password)){
-        const accessToken = await jwt.sign({userId: user.id, date: Date.now()}, process.env.JWT_SECRET || "", {expiresIn: "7d"})
-        setCookies(res, "access_token", accessToken)
-      return AppResponse.success(res, `Login successful, Welcome ${user.firstname}`, null)
-   }else{
-       return AppResponse.error(res, "Invalid Email or Password")
-   }
-})
+  // Validate input early
+  if (!email || !password) {
+    return AppResponse.error(res, "Email and password are required");
+  }
+
+  // Select only necessary fields to reduce data transfer
+  const user = await User.findOne({ 
+    where: { email },
+    attributes: ['id', 'firstname', 'password', 'googleId']
+  });
+
+  if (!user) {
+    return AppResponse.error(res, "Invalid email or password");
+  }
+
+  if (user.googleId || !user.password) {
+    return AppResponse.error(res, "Please sign in with Google");
+  }
+
+  // Verify password
+  if ((await bcrypt.compare(password, user.password))) {
+    return AppResponse.error(res, "Invalid email or password");
+  }
+
+  // Generate JWT
+  const accessToken = jwt.sign(
+    { userId: user.id},
+    process.env.JWT_SECRET || "",
+    { expiresIn: "7d" }
+  );
+
+  // Set cookie and send response
+  setCookies(res, "access_token", accessToken);
+  return AppResponse.success(res, `Welcome ${user.firstname}`, null);
+});

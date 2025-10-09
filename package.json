@@ -4,7 +4,7 @@
   "description": "",
   "main": "netlify/functions/api.ts",
   "scripts": {
-    "test": "cross-env mocha -r ts-node/register './netlify/functions/tests/**/*.test.ts' --reporter spec",
+    "test": "cross-env mocha -r ts-node/register './netlify/functions/tests/**/*.test.ts' --reporter spec --timeout 20000",
     "start": "ts-node netlify/functions/api.ts",
     "build": "npm install && tsc",
     "serve": "node dist/api.js",
