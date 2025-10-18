@@ -19,14 +19,14 @@ export const Category = sequelize.define<InventoryModel>("Category",{
     variantId: {
         type: DataTypes.INTEGER,
         references: {
-            model: "ProductVariants",
+            model: "ProductVariant",
             key: "id"
         }
     },
     productId: {
         type: DataTypes.INTEGER,
         references: {
-            model: "Category",
+            model: "Product",
             key: "id"
         }
     },       

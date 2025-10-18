@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../common/config";
 import { ProductVariantsModel } from "../common/types";
 
-export const ProductAttribute = sequelize.define<ProductVariantsModel>("Brand",{
+export const ProductVariant = sequelize.define<ProductVariantsModel>("Brand",{
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -26,7 +26,8 @@ export const ProductAttribute = sequelize.define<ProductVariantsModel>("Brand",{
     },
     additional_price: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0
     },
     quantity: {
         type: DataTypes.INTEGER,
