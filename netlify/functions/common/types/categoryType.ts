@@ -31,7 +31,7 @@ export interface CategoryModel extends Model<InferAttributes<CategoryModel>, Inf
     }
   export interface InventoryModel extends Model<InferAttributes<InventoryModel>, InferCreationAttributes<InventoryModel>> {
       id: CreationOptional<number>;
-      variant_id: ForeignKey<number>;
+      variantId: ForeignKey<number>;
       productId: ForeignKey<number>;
-      quantity: string;
+      quantity: number;
     }
