@@ -57,4 +57,11 @@ describe("User Auth", async()=>{
         expect(res.status).equals(400)
         expect(res.body.message).equals("User already exists")
     })
+
+    it("Get all users", async()=>{
+        const res = await request(app)
+        .get("/api/v1/user")
+        // expect(res.status).equals(200)
+        expect(res.body.message).equals("Users found")
+    })
 })

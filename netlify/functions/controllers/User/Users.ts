@@ -8,20 +8,18 @@ import bcrypt from "bcryptjs"
 export const getAllUsersController = AsyncHandler(async(req: Request, res: Response) =>{
    const users = await User.findAll()
    if( !users || users.length < 1) {
-    AppResponse.error(res, "No users found")
-    return
+    return AppResponse.error(res, "No users found")    
    }
-    AppResponse.success(res, "Users found", users)
+   return AppResponse.success(res, "Users found", users)
 })
 
 export const getUserByIdController = AsyncHandler(async(req: Request, res: Response) =>{
     const {id} = req.params
     const user = await User.findByPk(id)
     if(!user){
-        AppResponse.error(res, "User not found")
-        return
+        return AppResponse.error(res, "User not found")
     }
-    AppResponse.success(res, "User found", user)
+    return AppResponse.success(res, "User found", user)
 })
 
 export const updateUserController = AsyncHandler(async(req: Request, res: Response) =>{
@@ -35,12 +33,11 @@ export const updateUserController = AsyncHandler(async(req: Request, res: Respon
         phone_number?: string;
     } = req.body
     if(!id){
-        AppResponse.error(res, "Please provide an id")
-        return
+        return AppResponse.error(res, "Please provide an id")
+        
     }
     if(Object.keys(updatedUserData).includes("email")){
-        AppResponse.error(res, "Email address can not be changed")
-        return
+        return AppResponse.error(res, "Email address can not be changed")
     }
     if(Object.keys(updatedUserData).includes("password") && updatedUserData.password){
         updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10)
@@ -48,15 +45,14 @@ export const updateUserController = AsyncHandler(async(req: Request, res: Respon
     const user = await User.findByPk(id)
     const admin = await User.findByPk(req.id)
     if(!user) {
-        AppResponse.error(res, "User not found")
-        return
+        return AppResponse.error(res, "User not found")
+        
     }
     if (Object.keys(updatedUserData).includes("role") && !admin){
-        AppResponse.error(res, "Only Admins can update role")
-        return
+        return AppResponse.error(res, "Only Admins can update role")
     }
     const finalUser = await User.update(updatedUserData, {where: {id}})
-    AppResponse.success(res, "User Updated successfully", finalUser)
+    return AppResponse.success(res, "User Updated successfully", finalUser)
 })
 
 export const deleteUserController = AsyncHandler(async(req: Request, res: Response) =>{
@@ -66,5 +62,5 @@ export const deleteUserController = AsyncHandler(async(req: Request, res: Respon
          return AppResponse.error(res, "User not found");
         }
     const finalUser = await User.destroy({where:{id}})
-    AppResponse.success(res, "User Deleted successfully", finalUser)
+    return AppResponse.success(res, "User Deleted successfully", finalUser)
 })
