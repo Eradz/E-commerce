@@ -19,7 +19,8 @@ export const sequelize = new Sequelize({
   database: process.env.POSTGRES_DATABASE, 
   define:{
     freezeTableName:true
-  }
+  },
+  logging: false
 })
 export const db = async(): Promise<void> =>{
     try {
