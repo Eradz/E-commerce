@@ -28,7 +28,7 @@ export const loginController = AsyncHandler(async (req: Request, res: Response) 
   }
 
   // Verify password
-  if ((await bcrypt.compare(password, user.password))) {
+  if (!(await bcrypt.compare(password, user.password))) {
     return AppResponse.error(res, "Invalid email or password");
   }
 
